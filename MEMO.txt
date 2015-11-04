@@ -1,22 +1,36 @@
-# -*- encoding: utf-8 -*-
+1. rails g devise install
 
-Rails.application.routes.draw do
-  get 'users/indes'
+2. create session model
 
-  get 'users/show'
+```
+rails g devise User
+rails g device Admin
+```
 
-  root to: 'home#index'
+3. create controllers
 
-  get 'home/index'
-  get 'home/show'
+```
+rails g devise:controllers users
+rails g devise:controllers admins
+```
 
+4. create views
+
+```
+rails g devise:views users
+rails g devise:views admins
+```
+
+5. adjust routings
+
+```
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     passwords: 'users/passwords',
     registrations: 'users/registrations'
   }
 
-  resources :users, only: [:show, :index]
+  resources :admins, only: [:show, :index]
 
   devise_for :admins, controllers: {
     sessions: 'admins/sessions',
@@ -26,6 +40,4 @@ Rails.application.routes.draw do
 
   resources :admins, only: [:show, :index]
 
-  resources :tickets
-
-end
+```
