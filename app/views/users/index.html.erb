@@ -2,3 +2,10 @@
 <p>Find me in app/views/users/index.html.erb</p>
 
 <%= link_to "New Ticket", new_ticket_path %>
+
+<h2>Your Tickets</h2>
+<ul>
+  <% @tickets.each do |t| %>
+    <li>(<%= t.id %>)<%= t.message %></li>
+  <% end %>
+</ul>

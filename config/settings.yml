@@ -1,0 +1,13 @@
+defaults: &defaults
+
+development:
+  <<: *defaults
+  twitter:
+    consumer_key: ENV['CONSUMER KEY']
+    consumer_secret: YOUR CONSUMER SECRET
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
