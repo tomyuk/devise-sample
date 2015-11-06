@@ -3,7 +3,8 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable, :lockable, :timeoutable, :omniauthable
+         :confirmable, :lockable, :timeoutable, :omniauthable,
+         omniauth_providers: [:facebook, :twitter]
 
   has_many :tickets
 
@@ -13,5 +14,18 @@ class User < ActiveRecord::Base
       u.provider = auth['provider']
       u.name = auth['info']['name']
     end
+  end
+
+  def self.find_for_facebook_oauth(auth)
+    user = User.where(provider: auth.provider, uid: auth.uid).first
+    unless user
+      user = User.create( name:     auth.extra.raw_info.name,
+                          provider: auth.provider,
+                          uid:      auth.uid,
+                          email:    auth.info.email,
+                          token:    auth.credentials.token,
+                          password: Devise.friendly_token[0,20] )
+    end
+    return user
   end
 end

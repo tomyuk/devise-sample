@@ -11,7 +11,8 @@ Rails.application.routes.draw do
     passwords: 'users/passwords',
     registrations: 'users/registrations',
     confirmations: 'users/confirmations',
-    unlocks: 'users/unlocks'
+    unlocks: 'users/unlocks',
+    omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
   resources :users, only: [:show, :index]
@@ -22,6 +23,7 @@ Rails.application.routes.draw do
     registrations: 'admins/registrations',
     confirmations: 'admins/confirmations',
     unlocks: 'admins/unlocks'
+#    omniauth_callbacks: 'admins/omniauth_callbacks'
   }
 
   resources :admins, only: [:show, :index]
