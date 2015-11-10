@@ -54,3 +54,7 @@ bower.json
 
 # Ignore dotenv
 .env
+
+*~
+.*~
+.\#*
