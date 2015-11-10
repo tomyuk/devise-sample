@@ -13,8 +13,8 @@ default: &default
 development:
   <<: *default
   database: devise_sample_dev
-  username: postgres
-  password: pastgres
+  # username: tomo
+  # password: pastgres
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -22,11 +22,11 @@ development:
 test:
   <<: *default
   database: devise_sample_test
-  username: postgres
-  password: pastgres
+  # username: postgres
+  # password: pastgres
 
 production:
   <<: *default
   database: devise_sample
-  username: postgres
-  password: pastgres
+  # username: postgres
+  # password: pastgres

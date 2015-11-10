@@ -56,3 +56,5 @@ gem 'omniauth-facebook'
 gem 'settingslogic'
 
 gem 'rails-i18n'
+
+gem 'uuid'

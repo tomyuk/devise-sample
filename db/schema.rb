@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20151104075818) do
   enable_extension "plpgsql"
 
   create_table "admins", force: :cascade do |t|
+    t.string   "name",                   default: "", null: false
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -27,12 +28,21 @@ ActiveRecord::Schema.define(version: 20151104075818) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
+    t.integer  "failed_attempts",        default: 0,  null: false
+    t.string   "unlock_token"
+    t.datetime "locked_at"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end
 
+  add_index "admins", ["confirmation_token"], name: "index_admins_on_confirmation_token", unique: true, using: :btree
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
+  add_index "admins", ["unlock_token"], name: "index_admins_on_unlock_token", unique: true, using: :btree
 
   create_table "messages", force: :cascade do |t|
     t.integer  "ticket_id"
@@ -47,6 +57,7 @@ ActiveRecord::Schema.define(version: 20151104075818) do
   create_table "tickets", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "admin_id"
+    t.string   "subject"
     t.text     "message"
     t.boolean  "closed"
     t.datetime "created_at", null: false
@@ -57,6 +68,10 @@ ActiveRecord::Schema.define(version: 20151104075818) do
   add_index "tickets", ["user_id"], name: "index_tickets_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
+    t.string   "uid"
+    t.string   "provider"
+    t.string   "name",                   default: "", null: false
+    t.string   "token"
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -67,6 +82,13 @@ ActiveRecord::Schema.define(version: 20151104075818) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
+    t.integer  "failed_attempts",        default: 0,  null: false
+    t.string   "unlock_token"
+    t.datetime "locked_at"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end
