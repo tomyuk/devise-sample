@@ -1,39 +1,52 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>DeviseSample</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<header>
-  <nav>
-    <!-- user_signed_in? はユーザがログインしているか調べるdeviseのHelperメソッド -->
-    <% if user_signed_in? %>
-      <!-- current_user は現在ログインしているUserオブジェクトを返すdeviseのHelperメソッド -->
-      <!-- *_path はUserモデルを作成したときに、
-        deviseにより自動で作成されてますので、rake routesで確認できます -->
-      Logged in as <strong><%= current_user.email %></strong>.
-      <%= link_to 'プロフィール変更', edit_user_registration_path %> |
-      <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-    <% else %>
-      <%= link_to "User サインイン", new_user_registration_path %> |
-      <%= link_to "User ログイン", new_user_session_path %> |
-      <%= link_to "Admin サインイン", new_admin_registration_path %> |
-      <%= link_to "Admin ログイン", new_admin_session_path %><br>
-      <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %><br>
-      <%= link_to "Sign in with Twitter", user_omniauth_authorize_path(:twitter) %><br>
-    <% end %>
-  </nav>
-</header>
+    <title><%= content_for?(:title) ? yield(:title) : "foundation-rails" %></title>
+
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "vendor/modernizr" %>
+    <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
+
+    <nav class="top-bar" data-topbar role="navigation">
+      <ul class="title-area">
+	<li><h2><a class="pure-menu-heading" href="/">Devise Test Site</a></h2></li>
+	<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+      </ul>
+
+      <section class="top-bar-section">
+	<ul class="right">
+	  <% if user_signed_in? %>
+	  <li class="">Logged in as user <strong><%= current_user.email %></strong>.</li>
+	  <li class=""><%= link_to 'プロフィール変更', edit_user_registration_path %></li>
+	  <li class=""><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
+	  <% elsif admin_signed_in? %>
+	  <li class="">Logged in as admin <strong><%= current_admin.email %></strong>.</li>
+	  <li class=""><%= link_to 'プロフィール変更', edit_admin_registration_path %></li>
+	  <li class=""><%= link_to "ログアウト", destroy_admin_session_path, method: :delete %></li>
+	  <% else %>
+	  <li class=""><%= link_to "User Sinup", new_user_registration_path %></li>
+	  <li class=""><%= link_to "User Login", new_user_session_path %></li>
+	  <li class=""><%= link_to "Admin Signup", new_admin_registration_path %></li>
+	  <li class=""><%= link_to "Admin Login", new_admin_session_path %></li>
+	  <li class=""><%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %></li>
+	  <li class=""><%= link_to "Sign in with Twitter", user_omniauth_authorize_path(:twitter) %></li>
+	  <% end %>
+	</ul>
+      </section>
+    </nav>
 
 
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
 
-<%= yield %>
+    <%= yield %>
 
-</body>
+  </body>
 </html>

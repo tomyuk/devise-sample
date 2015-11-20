@@ -1,3 +1,4 @@
+# -*- ruby -*-
 source 'https://rubygems.org'
 
 
@@ -58,3 +59,5 @@ gem 'settingslogic'
 gem 'rails-i18n'
 
 gem 'uuid'
+# gem 'pure-css-rails'
+gem 'foundation-rails'
